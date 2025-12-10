@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Body by Megan | Personal Fitness & Nutrition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--dark:#1a1a1a;--pink:#e8b4b4;--white:#fff;--gray:#f5f5f5;--gray-dark:#888;--text:#333;--text-light:#666}
+    html{scroll-behavior:smooth}
+    body{font-family:'Montserrat',sans-serif;font-size:16px;line-height:1.7;color:var(--text)}
+    h1,h2,h3{font-weight:600;line-height:1.3;color:var(--dark)}
+    h1{font-size:clamp(2.5rem,5vw,3.5rem);font-weight:700}
+    h2{font-size:clamp(1.5rem,3vw,2rem)}
+    p{color:var(--text-light);line-height:1.8}
+    a{text-decoration:none;color:inherit;transition:.3s}
+    img{max-width:100%;height:auto;display:block}
+    ul{list-style:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+    .btn{display:inline-flex;align-items:center;padding:.875rem 2rem;font-weight:500;font-size:.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:.3s;border:none}
+    .btn--primary{background:var(--pink);color:var(--dark)}
+    .btn--primary:hover{background:#dba3a3}
+    .btn--secondary{background:transparent;color:var(--white);border:1px solid var(--white)}
+    .btn--secondary:hover{background:var(--white);color:var(--dark)}
+
+    .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.5rem 0}
+    .navbar__inner{display:flex;justify-content:flex-end}
+    .navbar__links{display:flex;gap:2rem}
+    .navbar__link{font-size:.8rem;font-weight:500;color:var(--white);text-transform:uppercase;letter-spacing:1px}
+    .navbar__link:hover{opacity:.8}
+
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative}
+    .hero__bg{position:absolute;inset:0;z-index:-1}
+    .hero__bg img{width:100%;height:100%;object-fit:cover;object-position:center top}
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,.5),rgba(0,0,0,.3),rgba(0,0,0,.1))}
+    .hero__content{max-width:600px;padding:8rem 0}
+    .hero__title{color:var(--white);margin-bottom:2rem;line-height:1.1}
+    .hero__subtitle{font-size:1rem;color:rgba(255,255,255,.9);margin-bottom:3rem;font-weight:300}
+    .hero__actions{display:flex;gap:1.5rem}
+    .hero__scroll{position:absolute;bottom:2rem;right:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--white);font-size:.75rem;text-transform:uppercase;letter-spacing:1px;opacity:.7}
+    .hero__scroll:hover{opacity:1}
+    .hero__scroll svg{animation:bounce 2s infinite}
+    @keyframes bounce{0%,20%,50%,80%,100%{transform:translateY(0)}40%{transform:translateY(5px)}60%{transform:translateY(3px)}}
+
+    .why-us{padding:8rem 0;background:var(--gray)}
+    .why-us__card{max-width:500px;margin:0 auto;background:var(--white);padding:3rem;text-align:center}
+    .why-us__title{font-size:1.75rem;margin-bottom:2rem}
+    .why-us__desc{margin-bottom:2rem;font-size:.95rem}
+    .why-us__list{text-align:left;margin-bottom:2rem}
+    .why-us__list li{padding:.5rem 0 .5rem 1.5rem;position:relative;font-size:.95rem}
+    .why-us__list li::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:6px;height:6px;background:var(--pink);border-radius:50%}
+    .why-us__line{width:1px;height:80px;background:var(--dark);margin:2rem auto 0}
+
+    .testimonials{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+    .testimonials::-webkit-scrollbar{display:none}
+    .testimonial{min-width:50%;scroll-snap-align:start;display:flex}
+    .testimonial__img{width:50%;height:400px;overflow:hidden}
+    .testimonial__img img{width:100%;height:100%;object-fit:cover}
+    .testimonial__content{width:50%;background:#9a9a9a;padding:3rem;display:flex;align-items:center}
+    .testimonial__quote{color:var(--white);font-size:.95rem;line-height:1.9;font-weight:300}
+
+    .features{padding:8rem 0}
+    .features__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem}
+    .feature{text-align:center;padding:2rem}
+    .feature__icon{width:60px;height:60px;margin:0 auto 2rem;color:var(--gray-dark)}
+    .feature__icon svg{width:100%;height:100%}
+    .feature__title{font-size:1.1rem;margin-bottom:1.5rem}
+    .feature__desc{font-size:.9rem}
+
+    .motivation{position:relative;min-height:500px;display:flex;align-items:center}
+    .motivation__bg{position:absolute;inset:0;z-index:-1}
+    .motivation__bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%)}
+    .motivation__accent{position:absolute;bottom:3rem;left:3rem;width:150px;height:150px;background:var(--pink);opacity:.9}
+    .motivation__title{color:var(--white);font-size:clamp(1.75rem,4vw,2.5rem);text-align:center;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+
+    .package{display:grid;grid-template-columns:1fr 1fr;min-height:400px}
+    .package--reverse{direction:rtl}
+    .package--reverse>*{direction:ltr}
+    .package__content{background:var(--dark);padding:3rem;display:flex;flex-direction:column;justify-content:center}
+    .package__subtitle{color:var(--gray-dark);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem}
+    .package__title{color:var(--white);font-size:1.75rem;font-weight:700;margin-bottom:1.5rem}
+    .package__desc{color:rgba(255,255,255,.8);font-size:.95rem}
+    .package__desc strong{color:var(--white)}
+    .package__img img{width:100%;height:100%;object-fit:cover}
+
+    .coach{background:var(--dark);padding:8rem 0}
+    .coach__content{max-width:600px}
+    .coach__title{color:var(--white);font-size:1.75rem;margin-bottom:1.5rem}
+    .coach__bio{color:rgba(255,255,255,.8);line-height:1.9}
+
+    .contact{background:var(--dark);padding:8rem 0}
+    .contact__header{max-width:600px;margin-bottom:3rem}
+    .contact__title{color:var(--white);font-size:1.75rem;text-transform:uppercase;margin-bottom:1.5rem}
+    .contact__intro{color:rgba(255,255,255,.8);font-size:.95rem;margin-bottom:1.5rem}
+    .contact__req{color:rgba(255,255,255,.6);font-size:.85rem}
+    .contact__form{max-width:500px}
+    .contact__row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .contact__field{margin-bottom:1.5rem}
+    .contact__field label{display:block;font-size:.85rem;font-weight:500;margin-bottom:.5rem;color:var(--white)}
+    .contact__field input,.contact__field textarea{width:100%;padding:.875rem 1rem;border:1px solid rgba(255,255,255,.2);background:transparent;color:var(--white);font-family:inherit;font-size:.95rem}
+    .contact__field input:focus,.contact__field textarea:focus{outline:none;border-color:var(--pink)}
+    .contact__field textarea{resize:vertical;min-height:100px}
+
+    .footer{background:var(--dark);padding:3rem 0;border-top:1px solid rgba(255,255,255,.1)}
+    .footer__grid{display:grid;grid-template-columns:2fr repeat(4,1fr);gap:3rem}
+    .footer__logo{font-size:1.25rem;color:var(--white);margin-bottom:1rem}
+    .footer__logo strong{font-weight:700}
+    .footer__copy{font-size:.8rem;color:rgba(255,255,255,.5)}
+    .footer__heading{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:1.5rem}
+    .footer__links{display:flex;flex-direction:column;gap:.5rem}
+    .footer__links a{font-size:.85rem;color:rgba(255,255,255,.6)}
+    .footer__links a:hover{color:var(--white)}
+    .footer__social{display:flex;gap:1rem}
+    .footer__social a{width:24px;height:24px;color:rgba(255,255,255,.6)}
+    .footer__social a:hover{color:var(--white)}
+    .footer__social svg{width:100%;height:100%}
+
+    @media(max-width:992px){
+      .testimonial{min-width:100%}
+      .features__grid{grid-template-columns:repeat(2,1fr)}
+      .footer__grid{grid-template-columns:repeat(3,1fr)}
+      .footer__brand{grid-column:1/-1;text-align:center;margin-bottom:2rem}
+    }
+    @media(max-width:768px){
+      .container{padding:0 2rem}
+      .navbar__links{display:none}
+      .hero__content{padding:120px 0 80px}
+      .hero__scroll{right:auto;left:50%;transform:translateX(-50%);bottom:3rem}
+      .hero__actions{flex-direction:column}
+      .why-us,.features,.coach,.contact{padding:5rem 0}
+      .why-us__card{padding:2.5rem}
+      .testimonial{flex-direction:column}
+      .testimonial__img,.testimonial__content{width:100%}
+      .testimonial__img{height:250px}
+      .testimonial__content{padding:2.5rem}
+      .features__grid{grid-template-columns:1fr}
+      .motivation{min-height:350px}
+      .motivation__accent{width:100px;height:100px;bottom:2rem;left:2rem}
+      .package{grid-template-columns:1fr}
+      .package--reverse{direction:ltr}
+      .package__img{order:-1;height:250px}
+      .package__content{padding:2.5rem}
+      .contact__row{grid-template-columns:1fr}
+      .footer{padding:2.5rem 0}
+      .footer__grid{grid-template-columns:repeat(2,1fr);text-align:center;gap:2rem}
+      .footer__social{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <ul class="navbar__links">
+          <li><a href="#about" class="navbar__link">About</a></li>
+          <li><a href="#services" class="navbar__link">Services</a></li>
+          <li><a href="#contact" class="navbar__link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero__bg">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1920&q=80" alt="Fitness">
+        <div class="hero__overlay"></div>
+      </div>
+      <div class="container">
+        <div class="hero__content">
+          <h1 class="hero__title">Overcome your<br>insecurities</h1>
+          <p class="hero__subtitle">We help females overcome their negative body image perceptions by offering tailored fitness and nutrition plans. You can achieve the body of your dreams, whatever this may be - supported alongside the Body by Megan programme.</p>
+          <div class="hero__actions">
+            <a href="#contact" class="btn btn--primary">join today</a>
+            <a href="#about" class="btn btn--secondary">learn more</a>
+          </div>
+        </div>
+      </div>
+      <a href="#about" class="hero__scroll">
+        <span>scroll</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+    </section>
+
+    <section id="about" class="why-us">
+      <div class="container">
+        <div class="why-us__card">
+          <h2 class="why-us__title">Why us?</h2>
+          <p class="why-us__desc">We understand what you need to achieve your health and fitness goals. We offer a sustainable programme which incorporates food & fitness you love - all whilst getting the body you love too!</p>
+          <ul class="why-us__list">
+            <li>A custom plan bespoke to you and your goals</li>
+            <li>Achievable for all fitness levels</li>
+            <li>Quick & easy meal plans tailored to your diet</li>
+            <li>Support for all your body struggles</li>
+            <li>We have started where you are today!</li>
+          </ul>
+          <div class="why-us__line"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <div class="testimonial">
+        <div class="testimonial__img"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80" alt="Client"></div>
+        <div class="testimonial__content">
+          <p class="testimonial__quote">A life-changing programme! Run by great Trainers who truly understand the challenge of achieving your body goals. It's a flexible plan which fits around my crazy work schedule. It has renewed my confidence so that I feel comfortable again in my own skin.</p>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial__img"><img src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=800&q=80" alt="Client"></div>
+        <div class="testimonial__content">
+          <p class="testimonial__quote">At the beginning of Winter I made the decision to commit to my body goals, so I took the leap by signing up to the Body by Megan programme. It is the best decision I have ever made! I'm now in tune with my goals.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="features">
+      <div class="container">
+        <div class="features__grid">
+          <div class="feature">
+            <div class="feature__icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1"><circle cx="24" cy="16" r="8"/><path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16"/><circle cx="24" cy="24" r="22"/></svg>
+            </div>
+            <h3 class="feature__title">Limited spaces</h3>
+            <p class="feature__desc">We are focused on putting the personal back into personal training - so we only take on a small handful of clients at any one time.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1"><rect x="8" y="12" width="32" height="28" rx="2"/><path d="M16 12V8M32 12V8M8 20h32"/><circle cx="24" cy="30" r="4"/></svg>
+            </div>
+            <h3 class="feature__title">24/7 support</h3>
+            <p class="feature__desc">Anytime, anywhere! We are here to support you on your journey... Every step of the way! We understand how important this is.</p>
+          </div>
+          <div class="feature">
+            <div class="feature__icon">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1"><path d="M24 4L6 14v20l18 10 18-10V14L24 4z"/><path d="M24 24v20M6 14l18 10 18-10"/></svg>
+            </div>
+            <h3 class="feature__title">Personal experience</h3>
+            <p class="feature__desc">We have truly walked the journey you have decided to embark on today. We now thrive in our day-to-day lives.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="motivation">
+      <div class="motivation__bg">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80" alt="Motivation">
+        <div class="motivation__accent"></div>
+      </div>
+      <div class="container">
+        <h2 class="motivation__title">Become the best version of yourself</h2>
+      </div>
+    </section>
+
+    <section>
+      <div class="package">
+        <div class="package__content">
+          <span class="package__subtitle">One-off package</span>
+          <h2 class="package__title">Training only</h2>
+          <p class="package__desc"><strong>For just £30</strong> you can receive a training plan designed for your fitness goals. We will work together to tailor this plan based on your current fitness levels.</p>
+        </div>
+        <div class="package__img"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Training"></div>
+      </div>
+      <div class="package package--reverse">
+        <div class="package__content">
+          <span class="package__subtitle">One-off package</span>
+          <h2 class="package__title">Nutrition only</h2>
+          <p class="package__desc"><strong>For just £30</strong> you can discover a nutrition plan based on your food preferences, dietary requirements and incorporating your body goal needs.</p>
+        </div>
+        <div class="package__img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80" alt="Nutrition"></div>
+      </div>
+    </section>
+
+    <section class="coach">
+      <div class="container">
+        <div class="coach__content">
+          <h2 class="coach__title">Your New Coach</h2>
+          <p class="coach__bio">Your new Coach Megan is passionate about helping as many females as possible fall in love with their bodies. Having struggled with her own body issues, she has overcome these challenges and now wants to help you too!</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact__header">
+          <h2 class="contact__title">don't wait a day longer!</h2>
+          <p class="contact__intro">If you are serious about becoming confident in your own skin, overcoming your insecurities and achieving your dream body, then get in touch today. There are no tied-in contracts or upfront commitments.</p>
+          <p class="contact__req"><em>Fields marked with an asterisk (*) are required.</em></p>
+        </div>
+        <form class="contact__form">
+          <div class="contact__row">
+            <div class="contact__field">
+              <label for="firstName">First name *</label>
+              <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="contact__field">
+              <label for="lastName">Last name *</label>
+              <input type="text" id="lastName" name="lastName" required>
+            </div>
+          </div>
+          <div class="contact__field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="contact__field">
+            <label for="phone">Phone number</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div class="contact__field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Let's do this!</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <h2 class="footer__logo">Body<strong>by</strong>Megan</h2>
+          <p class="footer__copy">© Copyright 2021 BodybyMegan. All rights reserved.</p>
+        </div>
+        <div>
+          <h3 class="footer__heading">Home</h3>
+          <ul class="footer__links"><li><a href="#">Homepage</a></li></ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Company</h3>
+          <ul class="footer__links">
+            <li><a href="#services">Nutrition Plans</a></li>
+            <li><a href="#services">Training Plans</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Contact</h3>
+          <ul class="footer__links"><li><a href="#contact">Get in touch</a></li></ul>
+        </div>
+        <div>
+          <h3 class="footer__heading">Follow us</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
