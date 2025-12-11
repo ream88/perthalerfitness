@@ -123,6 +123,10 @@
     .contact__field input:focus,.contact__field textarea:focus{outline:none;border-color:var(--pink)}
     .contact__field textarea{resize:vertical;min-height:100px}
     .contact__row{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md)}
+    .contact__status{margin-top:var(--space-md);font-size:.875rem;display:none}
+    .contact__status--success{display:block;color:var(--pink)}
+    .contact__status--error{display:block;color:#f87171}
+    .contact__form--loading button[type="submit"]{opacity:.6;pointer-events:none}
 
     .footer{background:var(--dark);padding:var(--space-lg) 0;border-top:1px solid rgba(255,255,255,.1)}
     .footer__inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-sm)}
@@ -374,11 +378,7 @@
             <p>1:1 Training zu Hause oder im Gym – Linz & Umgebung</p>
             <p>Diplomierte Fitness- & Personaltrainerin</p>
           </div>
-          <form class="contact__form" action="https://formsubmit.co/uher.mario@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="Neue Anfrage von Lena Perthaler Website">
-            <input type="hidden" name="_next" value="https://mariouher.com/perthalerfitness/thanks.html">
-            <input type="hidden" name="_captcha" value="true">
-            <input type="text" name="_honey" style="display:none">
+          <form class="contact__form" id="contactForm">
             <div class="contact__row">
               <div class="contact__field">
                 <label for="firstName">Vorname *</label>
@@ -402,6 +402,7 @@
               <textarea id="message" name="message" rows="4"></textarea>
             </div>
             <button type="submit" class="btn btn--primary">Nachricht senden</button>
+            <p class="contact__status" id="formStatus"></p>
           </form>
         </div>
       </div>
@@ -469,6 +470,51 @@
     });
 
     track.addEventListener('scroll', updateDots);
+
+    // Contact form
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      contactForm.classList.add('contact__form--loading');
+      formStatus.className = 'contact__status';
+      formStatus.textContent = '';
+
+      const formData = {
+        firstName: contactForm.firstName.value,
+        lastName: contactForm.lastName.value,
+        email: contactForm.email.value,
+        phone: contactForm.phone.value,
+        message: contactForm.message.value,
+        _subject: 'Neue Anfrage von Lena Perthaler Website'
+      };
+
+      fetch('https://formsubmit.co/ajax/uher.mario@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          contactForm.classList.remove('contact__form--loading');
+          if (data.success) {
+            formStatus.className = 'contact__status contact__status--success';
+            formStatus.textContent = 'Danke für dein Interesse! Lena meldet sich so bald wie möglich bei dir.';
+            contactForm.reset();
+          } else {
+            formStatus.className = 'contact__status contact__status--error';
+            formStatus.textContent = 'Etwas ist schiefgelaufen. Bitte versuche es erneut.';
+          }
+        })
+        .catch(() => {
+          contactForm.classList.remove('contact__form--loading');
+          formStatus.className = 'contact__status contact__status--error';
+          formStatus.textContent = 'Etwas ist schiefgelaufen. Bitte versuche es erneut.';
+        });
+    });
   </script>
 </body>
 </html>
